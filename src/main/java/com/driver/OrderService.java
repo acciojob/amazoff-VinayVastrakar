@@ -29,7 +29,7 @@ public class OrderService {
         return or.getPartnerById(partnerId);
     }
 
-    public Integer getOrderCountByPartnerId(String partnerId) {
+    public int getOrderCountByPartnerId(String partnerId) {
         return or.getOrderCountByPartnerId(partnerId);
     }
 
@@ -41,11 +41,11 @@ public class OrderService {
         return or.getAllorders();
     }
 
-    public Integer getCountOfUnassignedOrders() {
+    public int getCountOfUnassignedOrders() {
         return or.getCountOfUnassignedOrders();
     }
 
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String Dtime, String partnerId) {
+    public int getOrdersLeftAfterGivenTimeByPartnerId(String Dtime, String partnerId) {
         String time[] = Dtime.split(":");//hh:mm
         int newTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
 

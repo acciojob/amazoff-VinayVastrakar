@@ -46,7 +46,7 @@ public class OrderRepository {
         return deliverydb.get(partnerId);
     }
 
-    public Integer getOrderCountByPartnerId(String partnerId) {
+    public int getOrderCountByPartnerId(String partnerId) {
         return dpdb.get(partnerId).size();
     }
 
@@ -62,12 +62,12 @@ public class OrderRepository {
         return allOrder;
     }
 
-    public Integer getCountOfUnassignedOrders() {
+    public int getCountOfUnassignedOrders() {
         return orderdb.size() - partnerdb.size();
     }
 
-    public Integer getOrdersLeftAfterGivenTimeByPartnerId(int newTime, String partnerId) {
-        Integer cnt = 0;
+    public int getOrdersLeftAfterGivenTimeByPartnerId(int newTime, String partnerId) {
+        int cnt = 0;
         List<String> orders= dpdb.get(partnerId);
 
         for(String order : orders){
