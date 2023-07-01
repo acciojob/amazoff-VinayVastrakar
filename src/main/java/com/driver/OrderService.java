@@ -7,71 +7,69 @@ import java.util.List;
 
 @Service
 public class OrderService {
-    @Autowired
-    OrderRepository or=new OrderRepository();
+    //    @Autowired
+    OrderRepository orderRepository = new OrderRepository();
     public void addOrder(Order order) {
-        or.addOrder(order);
+        orderRepository.addOrder(order);
     }
 
     public void addPartner(String partnerId) {
-        or.addPartner(partnerId);
+        orderRepository.addPartner(partnerId);
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId) {
-        or.addOrderPartnerPair(orderId,partnerId);
+        orderRepository.addOrderPartnerPair(orderId, partnerId);
     }
 
     public Order getOrderById(String orderId) {
-        return or.getOrderByID(orderId);
+        return orderRepository.getOrderById(orderId);
     }
 
     public DeliveryPartner getPartnerById(String partnerId) {
-        return or.getPartnerById(partnerId);
+        return orderRepository.getPartnerById(partnerId);
     }
 
-    public int getOrderCountByPartnerId(String partnerId) {
-        return or.getOrderCountByPartnerId(partnerId);
+    public Integer getOrderCountByPartnerId(String partnerId) {
+        return orderRepository.getOrderCountByPartnerId(partnerId);
     }
 
     public List<String> getOrdersByPartnerId(String partnerId) {
-        return or.getOrdersByPartnerId(partnerId);
+        return orderRepository.getOrdersByPartnerId(partnerId);
     }
 
     public List<String> getAllOrders() {
-        return or.getAllorders();
+        return orderRepository.getAllOrders();
     }
 
-    public int getCountOfUnassignedOrders() {
-        return or.getCountOfUnassignedOrders();
-    }
-
-    public int getOrdersLeftAfterGivenTimeByPartnerId(String Dtime, String partnerId) {
-        String time[] = Dtime.split(":");//hh:mm
-        int newTime = Integer.parseInt(time[0])*60 + Integer.parseInt(time[1]);
-
-        return or.getOrdersLeftAfterGivenTimeByPartnerId(newTime, partnerId);
-
+    public Integer getCountOfUnassignedOrders() {
+        return orderRepository.getCountOfUnassignedOrders();
     }
 
     public String getLastDeliveryTimeByPartnerId(String partnerId) {
-        int time = or.getLastDeliveryTimeByPartnerId(partnerId);
-        String HH = String.valueOf(time/60);
-        String MM = String.valueOf(time%60);
-        if(HH.length()< 2){
-            HH='0'+HH;
-        }
-        if(MM.length()<2){
-            MM='0'+MM;
-        }
+        int lastDeliveryTime = orderRepository.getLastDeliveryTimeByPartnerId(partnerId);
+        if(lastDeliveryTime == -1)
+            return null;
+        String MM = String.valueOf(lastDeliveryTime % 60);
+        String HH = String.valueOf(lastDeliveryTime / 60);
+        if(HH.length() < 2)
+            HH = "0" + HH;
+        if(MM.length() < 2)
+            MM = "0" + MM;
+        return (HH + ":" + MM);
+    }
 
-        return HH+':'+MM;
+    public Integer getOrdersLeftAfterGivenTimeByPartnerId(String time, String partnerId) {
+        int HH = Integer.parseInt(time.substring(0, 2));
+        int MM = Integer.parseInt(time.substring(3, 5));
+        int givenTime  = (HH * 60) + MM;
+        return orderRepository.getOrdersLeftAfterGivenTimeByPartnerId(givenTime, partnerId);
     }
 
     public void deletePartnerById(String partnerId) {
-        or.deletePartnerById(partnerId);
+        orderRepository.deletePartnerById(partnerId);
     }
 
     public void deleteOrderById(String orderId) {
-        or.deleteOrderById(orderId);
+        orderRepository.deleteOrderById(orderId);
     }
 }
